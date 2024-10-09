@@ -1,7 +1,10 @@
 import java.util.Scanner;
 
 public class HelloWord {
-    public static void main(String[] args) {
+    public HelloWord() {
+    }
+
+    private static void main(final String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Add meg a neved:");
@@ -15,7 +18,8 @@ public class HelloWord {
             language = "hu";
         }
 
-        switch (language.toLowerCase()){
+        switch (language.toLowerCase()) {
+
             case "hu":
                 System.out.println("Hello " + name + "!");
                 break;
@@ -29,6 +33,8 @@ public class HelloWord {
             default:
                 System.out.println("Ismeretlen nyelv!");
                 System.out.println("szia " + name + "!");
-    }
+        }
+
         scanner.close();
-}}
+}
+}

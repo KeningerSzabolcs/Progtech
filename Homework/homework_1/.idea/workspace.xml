@@ -4,8 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bf5bd0c-58ab-4123-8ce7-89f3c0cb1bef" name="Changes" comment="a">
+    <list default="true" id="7bf5bd0c-58ab-4123-8ce7-89f3c0cb1bef" name="Changes" comment="Szétosztás">
+      <change afterPath="$PROJECT_DIR$/../Homework2/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Homework2/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Homework2/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Homework2/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Homework2/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Homework2/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Homework2/src/main/java/app/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Homework2/src/test/java/szabi_proba/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/HelloWord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HelloWord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modules/Greetings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modules/Greetings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modules/run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modules/run.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,13 +58,31 @@
   "keyToString": {
     "Application.HelloWord.executor": "Run",
     "Application.main.executor": "Run",
+    "Application.run.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.homework_1 [clean,validate].executor": "Run",
+    "Maven.homework_1 [clean,verify].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/kenin/IdeaProjects/Progtech/Homework/homework_1",
     "settings.editor.selected.configurable": "ml.llm.LLMConfigurable"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kenin\IdeaProjects\Progtech\Homework\homework_1" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kenin\IdeaProjects\Progtech\Homework\homework_1" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean verify" />
+      <command value="mvn clean validate" />
+    </option>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -78,11 +108,29 @@
       <option name="project" value="LOCAL" />
       <updated>1728478379246</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feladat befejezve">
+      <option name="closed" value="true" />
+      <created>1728479301515</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728479301515</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Szétosztás">
+      <option name="closed" value="true" />
+      <created>1728480951755</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728480951755</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a" />
-    <option name="LAST_COMMIT_MESSAGE" value="a" />
+    <MESSAGE value="feladat befejezve" />
+    <MESSAGE value="Szétosztás" />
+    <option name="LAST_COMMIT_MESSAGE" value="Szétosztás" />
   </component>
 </project>
