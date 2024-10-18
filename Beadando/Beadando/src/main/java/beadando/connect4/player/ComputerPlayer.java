@@ -12,9 +12,10 @@ public class ComputerPlayer extends Player {
      * @param name         the player's name
      * @param playerNumber the player's number (1 or 2)
      */
-    public ComputerPlayer(String name, int playerNumber) {
+    public ComputerPlayer(final String name, final int playerNumber) {
         super(name, playerNumber);
     }
+    private final int randomSize = 9;
 
     /**
      * Makes a random move by the computer player.
@@ -24,6 +25,6 @@ public class ComputerPlayer extends Player {
     @Override
     public int makeMove() {
         Random random = new Random();
-        return random.nextInt(9);
+        return random.nextInt(randomSize);
     }
 }

@@ -13,7 +13,7 @@ public class HumanPlayer extends Player {
      * @param name         the player's name
      * @param playerNumber the player's number (1 or 2)
      */
-    public HumanPlayer(String name, int playerNumber) {
+    public HumanPlayer(final String name, final int playerNumber) {
         super(name, playerNumber);
     }
 

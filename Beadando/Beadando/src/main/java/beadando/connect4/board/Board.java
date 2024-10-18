@@ -4,20 +4,23 @@ package beadando.connect4.board;
  * The Board class represents the Connect4 game board.
  * It supports moves and checking for wins.
  */
-    public class Board {
-        private final int[][] grid;
-        private final int rows;
-        private final int cols;
+public final class Board {
+    private final int[][] grid;
+    private final int numRows;
+    private final int numCols;
 
-     /**
+    private static final int CONNECT_LENGTH = 4;
+    private final int three = 3;
+
+    /**
      * Initializes the board with given rows and columns.
      *
      * @param rows the number of rows
      * @param cols the number of columns
      */
     public Board(final int rows, final int cols) {
-        this.rows = rows;
-        this.cols = cols;
+        this.numRows = rows;
+        this.numCols = cols;
         this.grid = new int[rows][cols];
     }
 
@@ -33,10 +36,10 @@ package beadando.connect4.board;
      * @return true if the move is successful, false otherwise
      */
     public boolean makeMove(final int column, final int player) {
-        if (column < 0 || column >= cols) {
+        if (column < 0 || column >= numCols) {
             return false;
         }
-        for (int row = rows - 1; row >= 0; row--) {
+        for (int row = numRows - 1; row >= 0; row--) {
             if (grid[row][column] == 0) {
                 grid[row][column] = player;
                 return true;
@@ -55,12 +58,12 @@ package beadando.connect4.board;
     }
 
     private boolean checkHorizontalWin() {
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols - 3; col++) {
-                if (grid[row][col] != 0 &&
-                        grid[row][col] == grid[row][col + 1] &&
-                        grid[row][col] == grid[row][col + 2] &&
-                        grid[row][col] == grid[row][col + 3]) {
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols - CONNECT_LENGTH + 1; col++) {
+                if (grid[row][col] != 0
+                        && grid[row][col] == grid[row][col + 1]
+                        && grid[row][col] == grid[row][col + 2]
+                        && grid[row][col] == grid[row][col + three]) {
                     return true;
                 }
             }
@@ -69,12 +72,12 @@ package beadando.connect4.board;
     }
 
     private boolean checkVerticalWin() {
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows - 3; row++) {
-                if (grid[row][col] != 0 &&
-                        grid[row][col] == grid[row + 1][col] &&
-                        grid[row][col] == grid[row + 2][col] &&
-                        grid[row][col] == grid[row + 3][col]) {
+        for (int col = 0; col < numCols; col++) {
+            for (int row = 0; row < numRows - CONNECT_LENGTH + 1; row++) {
+                if (grid[row][col] != 0
+                        && grid[row][col] == grid[row + 1][col]
+                        && grid[row][col] == grid[row + 2][col]
+                        && grid[row][col] == grid[row + three][col]) {
                     return true;
                 }
             }
@@ -83,22 +86,22 @@ package beadando.connect4.board;
     }
 
     private boolean checkDiagonalWin() {
-        for (int row = 0; row < rows - 3; row++) {
-            for (int col = 0; col < cols - 3; col++) {
-                if (grid[row][col] != 0 &&
-                        grid[row][col] == grid[row + 1][col + 1] &&
-                        grid[row][col] == grid[row + 2][col + 2] &&
-                        grid[row][col] == grid[row + 3][col + 3]) {
+        for (int row = 0; row < numRows - CONNECT_LENGTH + 1; row++) {
+            for (int col = 0; col < numCols - CONNECT_LENGTH + 1; col++) {
+                if (grid[row][col] != 0
+                        && grid[row][col] == grid[row + 1][col + 1]
+                        && grid[row][col] == grid[row + 2][col + 2]
+                        && grid[row][col] == grid[row + three][col + three]) {
                     return true;
                 }
             }
         }
-        for (int row = 3; row < rows; row++) {
-            for (int col = 0; col < cols - 3; col++) {
-                if (grid[row][col] != 0 &&
-                        grid[row][col] == grid[row - 1][col + 1] &&
-                        grid[row][col] == grid[row - 2][col + 2] &&
-                        grid[row][col] == grid[row - 3][col + 3]) {
+        for (int row = CONNECT_LENGTH - 1; row < numRows; row++) {
+            for (int col = 0; col < numCols - CONNECT_LENGTH + 1; col++) {
+                if (grid[row][col] != 0
+                        && grid[row][col] == grid[row - 1][col + 1]
+                        && grid[row][col] == grid[row - 2][col + 2]
+                        && grid[row][col] == grid[row - three][col + three]) {
                     return true;
                 }
             }
@@ -107,8 +110,8 @@ package beadando.connect4.board;
     }
 
     public void printBoard() {
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
                 System.out.print(grid[row][col] + " ");
             }
             System.out.println();

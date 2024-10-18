@@ -11,21 +11,20 @@ import beadando.connect4.player.HumanPlayer;
 public class Game {
     private final Board board = new Board(9, 9);
     private final HumanPlayer humanPlayer = new HumanPlayer("Human", 1);
-    private final ComputerPlayer computerPlayer = new ComputerPlayer("Computer", 2);
+    private final ComputerPlayer computerPlayer =
+            new ComputerPlayer("Computer", 2);
     private final boolean isGameRunning = true;
-
-    public Game() {
-    }
 
     /**
      * Starts the game loop where the human and computer players
      * take turns until one wins or the game ends.
      */
     public void start() {
-        while(this.isGameRunning) {
+        while (this.isGameRunning) {
             this.board.printBoard();
             int column = this.humanPlayer.makeMove();
-            if (!this.board.makeMove(column, this.humanPlayer.playerNumber)) {
+            if (!this.board.makeMove(column,
+                    this.humanPlayer.getPlayerNumber())) {
                 System.out.println("Invalid move. Try again.");
             } else {
                 if (board.winChecker()) {
@@ -35,7 +34,9 @@ public class Game {
                 }
 
                 column = this.computerPlayer.makeMove();
-                if (this.board.makeMove(column, this.computerPlayer.playerNumber) && this.board.winChecker()) {
+                if (this.board.makeMove(column,
+                        this.computerPlayer.getPlayerNumber())
+                        && this.board.winChecker()) {
                     this.board.printBoard();
                     System.out.println("Computer player wins!");
                     break;
