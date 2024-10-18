@@ -2,16 +2,30 @@ package beadando.connect4.player;
 
 import java.util.Scanner;
 
+/**
+ * HumanPlayer class, representing a human player in the Connect4 game.
+ */
 public class HumanPlayer extends Player {
-    private final Scanner scanner;
 
+    /**
+     * Constructs a HumanPlayer object with a given name and player number.
+     *
+     * @param name         the player's name
+     * @param playerNumber the player's number (1 or 2)
+     */
     public HumanPlayer(String name, int playerNumber) {
         super(name, playerNumber);
-        this.scanner = new Scanner(System.in);
     }
 
-    public int makeMova() {
+    /**
+     * Makes a move by taking input from the human player.
+     *
+     * @return the column number where the player wants to place a piece
+     */
+    @Override
+    public int makeMove() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter column (0-8): ");
-        return this.scanner.nextInt();
+        return scanner.nextInt();
     }
 }
