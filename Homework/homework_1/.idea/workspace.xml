@@ -5,18 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bf5bd0c-58ab-4123-8ce7-89f3c0cb1bef" name="Changes" comment="feladat befejezve">
-      <change afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/test/java/beadando/connect4/board/BoardTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/test/java/beadando/connect4/game/GameTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/test/java/beadando/connect4/player/ComputerPlayerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/test/java/beadando/connect4/player/HumanPlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Beadando/Beadando/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/board/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/player/ComputerPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/player/ComputerPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/player/HumanPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/player/HumanPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Beadando/Beadando/src/main/java/beadando/connect4/player/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Beadando/Beadando/src/test/java/beadando/AppTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

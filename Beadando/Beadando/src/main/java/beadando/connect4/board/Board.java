@@ -112,7 +112,13 @@ public final class Board {
     public void printBoard() {
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
-                System.out.print(grid[row][col] + " ");
+                if (grid[row][col] == 0) {
+                    System.out.print(". ");
+                } else if (grid[row][col] == 1) {
+                    System.out.print("Y ");
+                } else if (grid[row][col] == 2) {
+                    System.out.print("R ");
+                }
             }
             System.out.println();
         }
