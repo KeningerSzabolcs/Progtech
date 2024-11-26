@@ -36,4 +36,9 @@ public abstract class Player {
      * @return the column where the player wants to place a piece
      */
     public abstract int makeMove();
+
+    public String getName() {
+        return name;
+    }
 }
+

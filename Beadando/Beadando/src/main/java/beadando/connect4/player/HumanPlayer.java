@@ -28,4 +28,5 @@ public class HumanPlayer extends Player {
         System.out.println("Enter column (0-8): ");
         return scanner.nextInt();
     }
+
 }

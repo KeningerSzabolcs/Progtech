@@ -7,7 +7,10 @@ import beadando.connect4.player.HumanPlayer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.*;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,6 +24,9 @@ public class Game {
             new ComputerPlayer("Computer", 2);
     private final boolean isGameRunning = true;
     private final int nine = 9;
+    private static final String DB_URL = "jdbc:sqlite:player_data.db";
+    private static final String DB_USER = "your_db_user";
+    private static final String DB_PASSWORD = "your_db_password";
 
     /**
      * Starts the game loop where the human and computer players
@@ -31,7 +37,7 @@ public class Game {
 
         System.out.println("Adja meg a játékos nevét:");
         String playerName = scanner.nextLine();
-        playerName = new HumanPlayer(playerName, 1).toString();
+        HumanPlayer humanPlayer = new HumanPlayer(playerName, 1);
         System.out.println("Szeretne egy korábbi játékot betölteni? (i/n)");
         String loadGame = scanner.nextLine();
         if (loadGame.equalsIgnoreCase("i")) {
@@ -51,7 +57,8 @@ public class Game {
             } else {
                 if (board.winChecker()) {
                     board.printBoard();
-                    System.out.println("Human player wins!");
+                    System.out.println(humanPlayer.getName() + " wins!");
+                    updatePlayerWins(humanPlayer.getName());
                     break;
                 }
 
@@ -114,5 +121,60 @@ public class Game {
             System.out.println("Nem lehet létrehozni a fájlt: " + fileName);
         }
     }
+
+    public void initializeDatabase() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute("CREATE TABLE IF NOT EXISTS players (name VARCHAR(255) PRIMARY KEY, wins INT)");
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    public void showTopWinners(int numWinners) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("SELECT name, wins FROM players ORDER BY wins DESC")) {
+            ResultSet rs = stmt.executeQuery();
+            int counter = 0;
+            System.out.println("Top " + numWinners + " Winners:");
+            while (rs.next() && counter < numWinners) {
+                String name = rs.getString("name");
+                int wins = rs.getInt("wins");
+                System.out.println(name + " - " + wins + " wins");
+                counter++;
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+
+    private void updatePlayerWins(String playerName) {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement("INSERT OR REPLACE INTO players (name, wins) VALUES (?, ?)")) {
+            stmt.setString(1, playerName);
+            stmt.setInt(2, getWinsForPlayer(playerName) + 1);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    private int getWinsForPlayer(String playerName) {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement("SELECT wins FROM players WHERE name = ?")) {
+            stmt.setString(1, playerName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("wins");
+            }
+            return 0;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return 0;
+        }
+    }
+
+
+
+
 }
 
