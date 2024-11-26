@@ -37,6 +37,11 @@ public abstract class Player {
      */
     public abstract int makeMove();
 
+    /**
+     * Retrieves the name of the player.
+     *
+     * @return the name of the player as a {@code String}.
+     */
     public String getName() {
         return name;
     }

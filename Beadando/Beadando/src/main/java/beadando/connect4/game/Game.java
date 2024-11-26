@@ -7,10 +7,15 @@ import beadando.connect4.player.HumanPlayer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.sql.*;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
 
 
 /**
@@ -37,7 +42,7 @@ public class Game {
 
         System.out.println("Adja meg a játékos nevét:");
         String playerName = scanner.nextLine();
-        HumanPlayer humanPlayer = new HumanPlayer(playerName, 1);
+        HumanPlayer player = new HumanPlayer(playerName, 1);
         System.out.println("Szeretne egy korábbi játékot betölteni? (i/n)");
         String loadGame = scanner.nextLine();
         if (loadGame.equalsIgnoreCase("i")) {
@@ -57,8 +62,8 @@ public class Game {
             } else {
                 if (board.winChecker()) {
                     board.printBoard();
-                    System.out.println(humanPlayer.getName() + " wins!");
-                    updatePlayerWins(humanPlayer.getName());
+                    System.out.println(player.getName() + " wins!");
+                    updatePlayerWins(player.getName());
                     break;
                 }
 
@@ -122,17 +127,78 @@ public class Game {
         }
     }
 
+    /**
+     * Initializes the database by creating the necessary table
+     * for storing player data.
+     * If the table does not already exist, it will be created
+     * with the specified schema.
+     * <p>
+     * The table, named `players`,
+     * contains the following columns:
+     * <ul>
+     *   <li><strong>name</strong>
+     *   - The name of the player (unique, primary key).</li>
+     *   <li><strong>wins</strong>
+     *   - The number of games the player has won (integer).</li>
+     * </ul>
+     * <p>
+     * This method uses a JDBC connection to interact
+     * with the database. If the connection
+     * fails or an SQL error occurs, an error message
+     * is printed to the console.
+     *
+     * @throws SQLException if a database
+     * access error occurs or the SQL statement is invalid.
+     */
+
     public void initializeDatabase() {
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection conn =
+                     DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = conn.createStatement()) {
-            stmt.execute("CREATE TABLE IF NOT EXISTS players (name VARCHAR(255) PRIMARY KEY, wins INT)");
+            stmt.execute("CREATE TABLE IF NOT EXISTS players"
+                    + " (name VARCHAR(255) PRIMARY KEY, wins INT)");
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
-    public void showTopWinners(int numWinners) {
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement("SELECT name, wins FROM players ORDER BY wins DESC")) {
+
+    /**
+     * Displays the top players with the highest number
+     * of wins from the database.
+     * The results are ordered by the number of wins
+     * in descending order, showing
+     * the top `numWinners` players.
+     *
+     * @param numWinners the maximum
+     *                  number of top players to display.
+     *                   If there are fewer players in the database,
+     *                   it will display all of them.
+     * <p>
+     * The method connects to the database,
+     *                  executes a query to retrieve player names
+     * and their corresponding win counts,
+     *                  and prints them to the console in the format:
+     * <code>PlayerName - X wins</code>.
+     * </p>
+     * <p>
+     * Example output for `numWinners = 3`:
+     * <pre>
+     * Top 3 Winners:
+     * Szabi - 10 wins
+     * Boti - 8 wins
+     * Akos - 7 wins
+     * </pre>
+     * </p>
+     * @throws SQLException if a database access
+     * error occurs or the query execution fails.
+     */
+
+    public void showTopWinners(final int numWinners) {
+        try (Connection conn =
+                     DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt =
+                     conn.prepareStatement("SELECT name, wins FROM"
+                             + " players ORDER BY wins DESC")) {
             ResultSet rs = stmt.executeQuery();
             int counter = 0;
             System.out.println("Top " + numWinners + " Winners:");
@@ -147,20 +213,45 @@ public class Game {
         }
     }
 
+    /**
+     * Updates the win count for a specific player in the database.
+     * If the player does not already exist in the database,
+     * a new entry is created with an initial win count of 1.
+     * If the player already exists, their win count is incremented by 1.
+     *
+     * @param playerName the name of the player whose
+     *                  win count is to be updated.
+     *                   This is used as the primary key in the database.
+     * <p>
+     * The method uses an SQL `INSERT OR REPLACE`
+     *                  statement to either insert a new record
+     * or update an existing one. The win count
+     *                  is retrieved using
+     *                  the {@link #getWinsForPlayer(String)} method
+     * and incremented by 1 before being updated in the database.
+     * </p>
+     * @throws SQLException if a database access
+     * error occurs or the query execution fails.
+     */
 
-    private void updatePlayerWins(String playerName) {
+    private void updatePlayerWins(final String playerName) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement("INSERT OR REPLACE INTO players (name, wins) VALUES (?, ?)")) {
+             PreparedStatement stmt =
+                     conn.prepareStatement("INSERT OR REPLACE "
+                             + "INTO players (name, wins) VALUES (?, ?)")) {
             stmt.setString(1, playerName);
-            stmt.setInt(2, getWinsForPlayer(playerName) + 1);
+            stmt.setInt(2,
+                    getWinsForPlayer(playerName) + 1);
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
-    private int getWinsForPlayer(String playerName) {
+    private int getWinsForPlayer(final String playerName) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement("SELECT wins FROM players WHERE name = ?")) {
+             PreparedStatement stmt =
+                conn.prepareStatement("SELECT wins "
+                        + "FROM players WHERE name = ?")) {
             stmt.setString(1, playerName);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
