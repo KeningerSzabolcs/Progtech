@@ -29,4 +29,7 @@ public class HumanPlayer extends Player {
         return scanner.nextInt();
     }
 
+    public void askForName() {
+
+    }
 }

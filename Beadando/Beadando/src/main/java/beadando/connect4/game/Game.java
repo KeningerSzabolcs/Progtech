@@ -33,6 +33,16 @@ public class Game {
     private static final String DB_USER = "your_db_user";
     private static final String DB_PASSWORD = "your_db_password";
 
+
+    public Game(final Board mockBoard,
+                final HumanPlayer mockPlayer,
+                final ComputerPlayer mockComputerPlayer) {
+    }
+
+    public Game() {
+
+    }
+
     /**
      * Starts the game loop where the human and computer players
      * take turns until one wins or the game ends.
@@ -40,53 +50,69 @@ public class Game {
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Adja meg a játékos nevét:");
-        String playerName = scanner.nextLine();
-        HumanPlayer player = new HumanPlayer(playerName, 1);
-        System.out.println("Szeretne egy korábbi játékot betölteni? (i/n)");
-        String loadGame = scanner.nextLine();
-        if (loadGame.equalsIgnoreCase("i")) {
-            System.out.println("Adja meg a fájl nevét:");
-            String fileName = scanner.nextLine();
-            loadFromFile(fileName);
-        } else {
-            System.out.println("Üres pályával indul a játék.");
-        }
+        try {
+            System.out.println("Adja meg a játékos nevét:");
+            String playerName = scanner.nextLine().trim();
 
-        while (this.isGameRunning) {
-            this.board.printBoard();
-            int column = this.humanPlayer.makeMove();
-            if (!this.board.makeMove(column,
-                    this.humanPlayer.getPlayerNumber())) {
-                System.out.println("Invalid move. Try again.");
-            } else {
-                if (board.winChecker()) {
-                    board.printBoard();
-                    System.out.println(player.getName() + " wins!");
-                    updatePlayerWins(player.getName());
-                    break;
-                }
+            HumanPlayer player = new HumanPlayer(playerName, 1);
 
-                column = this.computerPlayer.makeMove();
-                if (this.board.makeMove(column,
-                        this.computerPlayer.getPlayerNumber())
-                        && this.board.winChecker()) {
-                    this.board.printBoard();
-                    System.out.println("Computer player wins!");
-                    break;
-                }
+            System.out.println("Szeretne egy korábbi játékot betölteni? (i/n)");
+            String loadGame = scanner.nextLine().trim();
+
+
+            if (loadGame.isEmpty()) {
+                loadGame = scanner.nextLine().trim();
             }
-            System.out.println("Szeretné menteni a játékot? (i/n)");
-            String saveGame = scanner.nextLine();
-            if (saveGame.equalsIgnoreCase("i")) {
+
+            if (loadGame.equalsIgnoreCase("i")) {
                 System.out.println("Adja meg a fájl nevét:");
-                String fileName = scanner.nextLine();
-                saveToFile(fileName);
-                System.out.println("Játék elmentve.");
+                String fileName = scanner.nextLine().trim();
+                loadFromFile(fileName);
+            } else {
+                System.out.println("Új játék kezdődik...");
             }
+
+            while (this.isGameRunning) {
+                this.board.printBoard();
+
+                int column = this.humanPlayer.makeMove();
+                if (!this.board.makeMove(column,
+                        this.humanPlayer.getPlayerNumber())) {
+                    System.out.println("Érvénytelen lépés. Próbálja újra.");
+                } else {
+                    if (board.winChecker()) {
+                        board.printBoard();
+                        System.out.println(player.getName() + " nyert!");
+                        updatePlayerWins(player.getName());
+                        break;
+                    }
+                    column = this.computerPlayer.makeMove();
+                    if (this.board.makeMove(column,
+                            this.computerPlayer.getPlayerNumber())) {
+                        if (this.board.winChecker()) {
+                            this.board.printBoard();
+                            System.out.println("Számítógép nyert!");
+                            break;
+                        }
+                    }
+                }
+                System.out.println("Szeretné menteni a játékot? (i/n)");
+                String saveGame = scanner.nextLine().trim();
+
+                if (saveGame.isEmpty()) {
+                    saveGame = scanner.nextLine().trim();
+                }
+
+                if (saveGame.equalsIgnoreCase("i")) {
+                    System.out.println("Adja meg a fájl nevét:");
+                    String fileName = scanner.nextLine();
+                    saveToFile(fileName);
+                    System.out.println("Játék elmentve.");
+                }
+            }
+        } finally {
+            scanner.close();
         }
-
-
     }
 
     /**
@@ -107,6 +133,7 @@ public class Game {
         } catch (FileNotFoundException e) {
             System.out.println("Nem található a fájl: " + fileName);
         }
+
     }
 
     /**
@@ -234,7 +261,7 @@ public class Game {
      * error occurs or the query execution fails.
      */
 
-    private void updatePlayerWins(final String playerName) {
+    public void updatePlayerWins(final String playerName) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt =
                      conn.prepareStatement("INSERT OR REPLACE "
@@ -247,7 +274,22 @@ public class Game {
             System.err.println(e.getMessage());
         }
     }
-    private int getWinsForPlayer(final String playerName) {
+    /**
+     * Retrieves the number of wins for a specific player from the database.
+     *
+     * This method queries the database to get
+     * the number of wins for a player based on the player's name.
+     * If the player is found in the database,
+     * it returns the number of wins. If the player is not found,
+     * it returns 0.
+     *
+     * @param playerName the name of the player
+     *                   whose wins are to be retrieved
+     * @return the number of wins for the player,
+     * or 0 if the player does not exist in the database
+     */
+
+    public int getWinsForPlayer(final String playerName) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt =
                 conn.prepareStatement("SELECT wins "
@@ -265,7 +307,7 @@ public class Game {
     }
 
 
-
-
+    public void getUserInput(final String s) {
+    }
 }
 

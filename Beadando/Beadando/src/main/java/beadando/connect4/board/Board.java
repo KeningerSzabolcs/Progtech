@@ -106,6 +106,7 @@ public final class Board {
                 }
             }
         }
+
         return false;
     }
 

@@ -1,9 +1,16 @@
 package beadando.connect4.player;
 
+import beadando.connect4.player.HumanPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.io.ByteArrayInputStream;
-import java.util.Scanner;
+import java.io.InputStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HumanPlayerTest {
@@ -12,8 +19,10 @@ class HumanPlayerTest {
 
     @BeforeEach
     void setUp() {
-        ByteArrayInputStream in = new ByteArrayInputStream("3".getBytes());
-        Scanner scanner = new Scanner(in);
+        String simulatedInput = "3\n";
+        InputStream in = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(in);
+
         humanPlayer = new HumanPlayer("TestPlayer", 1);
     }
 
